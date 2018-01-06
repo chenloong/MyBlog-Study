@@ -1,0 +1,17 @@
+.article-head-img{
+    float:left;
+}
+.article-head-img img{
+    height: 125px;
+    width:220px;
+}
+
+.article-summary{
+    width: 474px;
+    margin-left: 15px;
+    float:left;
+}
+
+.Clear{
+    clear: both;
+}
