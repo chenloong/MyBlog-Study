@@ -25,9 +25,10 @@ class Article(models.Model):
         self.views += 1
         self.save(update_fields=['views'])
 
-    def save(self, *args, **kwargs):
-        self.summary = self.content[:54]
-        super(Article, self).save(*args, **kwargs)
+    # 通过复写模型的 save 方法，从正文字段摘取前N个字符保存到摘要字段.
+    # def save(self, *args, **kwargs):
+    #     self.summary = self.content[:54]
+    #     super(Article, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return "%s, author:%s" %(self.title, self.author)

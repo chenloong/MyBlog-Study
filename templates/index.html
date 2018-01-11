@@ -93,7 +93,8 @@
                                             <li><i class="fa fa-eye"> </i> {{ article.views }}阅读</li>
                                         </ul>
                                     </div>
-                                    <div>{{ article.summary }}</div>
+                                    {# 使用 truncatechars 模板过滤器,在 Django 的模板系统中，模板变量器的使用语法为 {{ var | filter: arg }}。可以将模板过滤看做一个函数，它会作用于被它作用的模板变量，从而改变模板变量的值。例如这里的 truncatechars 过滤器可以截取模板变量值的前 N 个字符显示。#}
+                                    <div>{{ article.content|truncatechars:90|safe }}</div>
                                 </div>
                                     <div class="Clear"><!--如果上面用到float,下面布局开始前最好清除一下。--></div>
                                 <hr>
