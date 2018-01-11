@@ -1,3 +1,4 @@
+{% load tags %}
 <!DOCTYPE html>
 <html>
 
@@ -103,72 +104,65 @@
                             </div>
                         </div>
                     </div>
+{#                    R Sidebar#}
                     <div class="col-lg-4">
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
                                 <span class="label label-warning pull-right">Data has changed</span>
-                                <h5>User activity</h5>
+                                <h5>最新文章</h5>
                             </div>
                             <div class="ibox-content">
                                 <div class="row">
-                                    <div class="col-xs-4">
-                                        <small class="stats-label">Pages / Visit</small>
-                                        <h4>236 321.80</h4>
-                                    </div>
-
-                                    <div class="col-xs-4">
-                                        <small class="stats-label">% New Visits</small>
-                                        <h4>46.11%</h4>
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <small class="stats-label">Last week</small>
-                                        <h4>432.021</h4>
-                                    </div>
+                                    {% get_newest_article as newest_article_list %}
+                                    <ul>
+                                        {% for article in newest_article_list %}
+                                        <li>
+                                            <h4><a href="{% url 'article_ditail' article.id %}">{{ article.title|truncatechars:20 }}</a></h4>
+                                        </li>
+                                        {% empty %}
+                                        暂无文章！
+                                        {% endfor %}
+                                    </ul>
                                 </div>
                             </div>
+                            <div class="ibox-title">
+                                <h5>文章归档</h5>
+                            </div>
+
                             <div class="ibox-content">
                                 <div class="row">
-                                    <div class="col-xs-4">
-                                        <small class="stats-label">Pages / Visit</small>
-                                        <h4>643 321.10</h4>
-                                    </div>
-
-                                    <div class="col-xs-4">
-                                        <small class="stats-label">% New Visits</small>
-                                        <h4>92.43%</h4>
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <small class="stats-label">Last week</small>
-                                        <h4>564.554</h4>
-                                    </div>
+                                    {% archives as date_list %}
+                                    <ul>
+                                        {% for date in date_list %}
+                                        <li>
+                                            <h4><a href="#">{{ date.year }}年 {{ date.month }} 月</a></h4>
+                                        </li>
+                                        {% empty %}
+                                        暂无归档！
+                                        {% endfor %}
+                                    </ul>
                                 </div>
                             </div>
-                            <div class="ibox-content">
-                                <div class="row">
-                                    <div class="col-xs-4">
-                                        <small class="stats-label">Pages / Visit</small>
-                                        <h4>436 547.20</h4>
-                                    </div>
 
-                                    <div class="col-xs-4">
-                                        <small class="stats-label">% New Visits</small>
-                                        <h4>150.23%</h4>
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <small class="stats-label">Last week</small>
-                                        <h4>124.990</h4>
-                                    </div>
-                                </div>
+                            <div class="ibox-title">
+                                <h5>版块分类</h5>
                             </div>
+                                <div class="ibox-title">
+                                    {% get_categories as categories_list %}
+                                    {% for category in categories_list %}
+                                        <div class="row">
+                                            <ul>
+                                                <li class="R-Sidebar-li">
+                                                    <a href="#"><h5>{{ category.name }}</h5></a> <span class="label label-primary">{{ category.article_set.select_related.count }}</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    {% endfor %}
+                                </div>
                         </div>
                     </div>
-
                 </div>
-
-
-
             </div>
-
         </div>
         {% endblock %}
         <div class="footer">

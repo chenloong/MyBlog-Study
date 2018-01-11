@@ -15,3 +15,8 @@
 .Clear{
     clear: both;
 }
+
+.R-Sidebar-li{
+    list-style-type: none;
+    height: 18px;
+}
