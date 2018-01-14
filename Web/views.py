@@ -1,10 +1,12 @@
 #coding:utf-8
-from django.shortcuts import render, redirect, HttpResponseRedirect
+from django.shortcuts import render, redirect, HttpResponseRedirect, get_object_or_404
 from Web import models
+from .models import Article
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth import authenticate, login, logout
 from .forms import ArticleForm, handle_upload_file
+from comments.forms import CommentForm
 # Create your views here.
 
 
@@ -19,15 +21,19 @@ def category(request, category_id):
 
 
 def article_ditail(request, article_id):
-    try:
-        article_obj = models.Article.objects.get(id=article_id)
+    article_obj = get_object_or_404(Article, id=article_id)
 
-        # 阅读量 +1
-        article_obj.increase_views()
+    # 阅读量 +1
+    article_obj.increase_views()
 
-    except ObjectDoesNotExist as e:
-        return render(request, '404.html', {'err_msg':u"文章不存在!"})
-    return render(request, "article.html", {'article_obj':article_obj})
+    form = CommentForm()
+    comment_list = article_obj.comment_set.all()
+    context = {
+        'article_obj': article_obj,
+        'form': form,
+        'comment_list': comment_list
+    }
+    return render(request, "article.html", context=context)
 
 
 def acc_logout(request):

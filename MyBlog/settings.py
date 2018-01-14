@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Web.apps.WebConfig',
+    'comments', # comments app
 ]
 
 MIDDLEWARE_CLASSES = [

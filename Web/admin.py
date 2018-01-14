@@ -13,8 +13,8 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
 
 
-class CommentAdmin(admin.ModelAdmin):
-    list_display = ('id', 'article', 'user', 'parent_comment', 'comment')
+# class CommentAdmin(admin.ModelAdmin):
+#     list_display = ('id', 'article', 'user', 'parent_comment', 'comment')
 
 
 class ThumbUPAdmin(admin.ModelAdmin):
@@ -22,7 +22,7 @@ class ThumbUPAdmin(admin.ModelAdmin):
 
 admin.site.register(models.Article, ArticleAdmin)
 admin.site.register(models.Category, CategoryAdmin)
-admin.site.register(models.Comment, CommentAdmin)
+# admin.site.register(models.Comment, CommentAdmin)
 admin.site.register(models.ThumbUP, ThumbUPAdmin)
 admin.site.register(models.UserProfile)
 admin.site.register(models.UserGroup)

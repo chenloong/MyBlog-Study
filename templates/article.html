@@ -15,27 +15,69 @@
                         {{ article_obj.title }}
                     </h1>
                 </div>
-                <p>{{ article_obj.content|safe }}</p>
-                <hr>
+                <p>{{ article_obj.content|safe }}</p><hr>
+                <div class="col-md-12">
+                    <div class="small text-right">
+                        <h5>Stats:</h5>
+                        <div> <i class="fa fa-comments-o"> </i> {{ article_obj.comment_set.select_related.count }} 评论 </div>
+                        <i class="fa fa-eye"> </i> {{ article_obj.views }} 阅读 <br>
+                        <span class="fa fa-thumbs-up"></span> {{ article_obj.thumbup_set.select_related.count }} 赞
+                    </div>
+                </div>
+
                 <div class="row">
-                    <div class="col-md-6">
-                        <h5>Tags:</h5>
-                        <button class="btn btn-primary btn-xs" type="button">Model</button>
-                        <button class="btn btn-white btn-xs" type="button">Publishing</button>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="small text-right">
-                            <h5>Stats:</h5>
-                            <div> <i class="fa fa-comments-o"> </i> {{ article_obj.comment_set.select_related.count }} 评论 </div>
-                            <i class="fa fa-eye"> </i> {{ article_obj.views }} 阅读 <br>
-                            <span class="glyphicon glyphicon-thumbs-up"></span> {{ article_obj.thumbup_set.select_related.count }} 赞
-                        </div>
-                    </div>
+                    <div class="col-md-12">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <h5>用户评论</h5>
+                                </div>
+                                <div>
+                                    <form method="post" action="{% url 'comments:article_comment' article_obj.id %}">{% csrf_token %}
+                                      <div class="col-md-4 form-group">
+                                          <label for="exampleInputText">用户</label>
+                                          <input id="id_name" maxlength="100" name="name" type="text" value="{{ request.user.userprofile.name }}"/>
+                                          {{ form.name.errors }}
+                                      </div>
+                                        <div class="col-md-4 form-group">
+                                          <label for="exampleInputText">邮箱</label>
+                                          <input id="id_email" maxlength="255" name="email" type="email" value="{{ request.user.email }}" />
+                                          {{ form.email.errors }}
+                                      </div>
+                                        <div class="col-md-4 form-group">
+                                          <label for="exampleInputText">URL</label>
+                                          {{ form.url}}
+                                          {{ form.url.errors }}
+                                      </div>
+                                        <div class="col-md-12 form-group">
+                                          <label for="exampleInputText">评论内容</label><br>
+                                          <textarea cols="80" id="id_text" name="text" rows="2"></textarea>
+                                          {{ form.text.errors }}
+                                      </div>
+
+                                      <button type="submit" class="btn btn-default pull-left comment-sub">提交评论</button>
+                                    </form>
+                                </div>
+                                <div class="ibox-content no-padding">
+                                    <ul class="list-group">
+                                        {% for comment in comment_list reversed %}
+                                        <li class="list-group-item">
+                                            <p><a class="text-info" href="#">@{{ comment.name}}</a> {{ comment.text }}</p>
+                                            <small class="block text-muted"><i class="fa fa-clock-o"></i> {{ comment.created_time }}</small>
+                                        </li>
+                                            {% empty %}
+                                            <li class="list-group-item">
+                                            <p>暂无评论</p>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+
+                    </div>    <!-- row -->
+                </div>
+
                 </div>
             </div>
         </div>
     </div>
-    <h4></h4>
-    <p></p>
-
 {% endblock %}

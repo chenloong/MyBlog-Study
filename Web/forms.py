@@ -12,7 +12,6 @@ class ArticleForm(forms.Form):
     head_img = forms.ImageField()
     content = forms.CharField(min_length=10)
 
-
 def handle_upload_file(request, f):
     base_img_upload_path = "static/images"
     user_path = "%s/%s" %(base_img_upload_path, request.user.userprofile.id)

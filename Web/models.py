@@ -35,14 +35,15 @@ class Article(models.Model):
 
 
 # 评论表
-class Comment(models.Model):
-    article = models.ForeignKey("Article")
-    user = models.ForeignKey("UserProfile")
-    parent_comment = models.ForeignKey("self", related_name="p_comment", blank=True, null=True)
-    comment = models.TextField(max_length=1000)
-
-    def __unicode__(self):
-        return "%s, user:%s" %(self.article, self.user)
+# class Comment(models.Model):
+#     article = models.ForeignKey("Article")
+#     user = models.ForeignKey("UserProfile")
+#     parent_comment = models.ForeignKey("self", related_name="p_comment", blank=True, null=True)
+#     comment = models.TextField(max_length=1000)
+#     created_time = models.DateTimeField(auto_now_add=True)
+#
+#     def __unicode__(self):
+#         return "%s, user:%s" %(self.article, self.user)
 
 
 # 点赞表
